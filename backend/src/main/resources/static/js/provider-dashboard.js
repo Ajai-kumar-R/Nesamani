@@ -237,6 +237,42 @@ function renderOpenJobs(query='') {
 
 function filterOpenJobs(){ renderOpenJobs(document.getElementById('jobSearch')?.value.trim().toLowerCase()||''); }
 
+function loadJobs() {
+  fetch("/provider/jobs")
+  .then(res => {
+     if (!res.ok) throw new Error("Network response was not ok");
+     return res.json();
+  })
+  .then(data => {
+     console.log(data);
+     if (Array.isArray(data)) {
+         MOCK.openJobs = data.map(j => ({
+             id: j.id,
+             title: j.title || 'Untitled',
+             category: j.category || 'General',
+             location: j.location || '',
+             budget: j.budget || '',
+             duration: j.duration || 'One-time',
+             neederName: j.needer ? j.needer.name : (j.neederName ? j.neederName : 'Unknown'),
+             date: j.createdAt ? new Date(j.createdAt).toLocaleDateString() : '',
+             icon: categoryIcon(j.category),
+             responseCount: j.responseCount || 0
+         }));
+         renderOpenJobs(document.getElementById('jobSearch')?.value.trim().toLowerCase()||'');
+     }
+  })
+  .catch(err => console.error("Failed to load jobs:", err));
+}
+
+// Jobs must load when page opens
+setTimeout(() => {
+   loadJobs();
+}, 500);
+
+setInterval(() => {
+   loadJobs();
+}, 5000);
+
 function showRespondModal(jobId) {
   const j = MOCK.openJobs.find(x=>x.id===jobId);
   if (!j) return;

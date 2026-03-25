@@ -10,6 +10,7 @@ import java.util.Optional;
 public interface UserRepository extends JpaRepository<User, Long> {
     Optional<User> findByEmail(String email);
     boolean existsByEmail(String email);
+    List<User> findByLocation(String location);
     List<User> findByRole(User.Role role);
 
     @Query("SELECT u FROM User u WHERE u.role = 'PROVIDER' AND " +

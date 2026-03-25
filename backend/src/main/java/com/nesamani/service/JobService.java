@@ -64,6 +64,14 @@ public class JobService {
         return jobRepo.searchOpenJobs(cat, loc);
     }
 
+    public List<Job> getAllJobs() {
+        return jobRepo.findAll();
+    }
+
+    public List<Job> getJobsByLocation(String location) {
+        return jobRepo.findByLocation(location);
+    }
+
     // ══════════════════════════════════════════════════════════
     //  SERVICES  (uploaded by PROVIDER — Flow B)
     // ══════════════════════════════════════════════════════════

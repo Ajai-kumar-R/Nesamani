@@ -98,4 +98,8 @@ public class UserService {
         if (cat == null && loc == null) return getAllProviders();
         return userRepo.searchProviders(cat, loc);
     }
+
+    public List<User> getWorkersByLocation(String location) {
+        return userRepo.findByLocation(location);
+    }
 }

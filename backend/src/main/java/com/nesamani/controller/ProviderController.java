@@ -173,6 +173,23 @@ public class ProviderController {
         return ResponseEntity.ok(jobs.stream().map(this::jobMap).collect(Collectors.toList()));
     }
 
+    // --- NEW ENDPOINTS DEMANDED BY USER ---
+    @GetMapping({"/jobs", "/provider/jobs"})
+    public List<Job> getAllJobs() {
+        return jobService.getAllJobs();
+    }
+
+    @GetMapping("/jobs/location/{location}")
+    public List<Job> getJobsByLocation(@PathVariable String location) {
+        return jobService.getJobsByLocation(location);
+    }
+
+    @GetMapping("/workers/{location}")
+    public List<User> getWorkers(@PathVariable String location) {
+        return userService.getWorkersByLocation(location);
+    }
+    // --------------------------------------
+
     /** Respond to a job */
     @PostMapping("/api/provider/jobs/{id}/respond")
     public ResponseEntity<?> respondToJob(@PathVariable Long id,

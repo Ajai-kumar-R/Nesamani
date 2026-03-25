@@ -8,6 +8,8 @@ import java.util.List;
 
 @Repository
 public interface JobRepository extends JpaRepository<Job, Long> {
+    List<Job> findAll();
+    List<Job> findByLocation(String location);
     List<Job> findByNeederOrderByCreatedAtDesc(User needer);
     List<Job> findByStatusOrderByCreatedAtDesc(Job.JobStatus status);
 
