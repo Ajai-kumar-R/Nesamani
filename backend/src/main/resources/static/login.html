@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login — Nesamani</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <div class="bg-grid"></div>
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+
+  <div class="page-wrap">
+
+
+    <aside class="brand-panel">
+      <div class="brand-inner">
+        <div class="brand-logo">
+          <span class="logo-mark">N</span>
+        </div>
+        <h1 class="brand-name">Nesamani</h1>
+        <p class="brand-tagline">Connecting skilled hands<br>with those who need them.</p>
+        <ul class="brand-features">
+          <li><span class="feat-dot"></span>Verified service providers</li>
+          <li><span class="feat-dot"></span>Real-time job matching</li>
+          <li><span class="feat-dot"></span>Secure payments</li>
+        </ul>
+      </div>
+      <div class="brand-decoration">
+        <div class="dec-ring dec-ring-1"></div>
+        <div class="dec-ring dec-ring-2"></div>
+        <div class="dec-ring dec-ring-3"></div>
+      </div>
+    </aside>
+
+    
+    <main class="auth-panel">
+      <div class="auth-card">
+
+        <div class="card-header">
+          <h2 class="card-title">Welcome back</h2>
+          <p class="card-sub">Sign in to your Nesamani account</p>
+        </div>
+
+        <form id="loginForm" class="auth-form" novalidate>
+
+          <div class="field-group">
+            <label for="email" class="field-label">Email Address</label>
+            <div class="field-wrap">
+              <svg class="field-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
+                <rect x="2" y="4" width="20" height="16" rx="2"/>
+                <path d="M2 7l10 7 10-7"/>
+              </svg>
+              <input type="email" id="email" class="field-input" placeholder="you@example.com" required autocomplete="email">
+            </div>
+            <span class="field-error" id="email-error"></span>
+          </div>
+
+          <div class="field-group">
+            <label for="password" class="field-label">Password</label>
+            <div class="field-wrap">
+              <svg class="field-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
+                <rect x="3" y="11" width="18" height="11" rx="2"/>
+                <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+              </svg>
+              <input type="password" id="password" class="field-input" placeholder="••••••••" required autocomplete="current-password">
+              <button type="button" class="toggle-pw" id="togglePw" aria-label="Toggle password">
+                <svg class="eye-icon eye-open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
+                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                  <circle cx="12" cy="12" r="3"/>
+                </svg>
+                <svg class="eye-icon eye-closed" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" style="display:none">
+                  <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/>
+                  <line x1="1" y1="1" x2="23" y2="23"/>
+                </svg>
+              </button>
+            </div>
+            <span class="field-error" id="pw-error"></span>
+          </div>
+
+          <div class="form-meta">
+            <label class="remember-wrap">
+              <input type="checkbox" id="remember" class="remember-cb">
+              <span class="remember-box"></span>
+              <span class="remember-label">Remember me</span>
+            </label>
+            <a href="#" class="forgot-link">Forgot password?</a>
+          </div>
+
+          <button type="submit" class="btn-primary" id="loginBtn">
+            <span class="btn-text">Sign In</span>
+            <span class="btn-spinner" id="loginSpinner"></span>
+          </button>
+
+        </form>
+
+        <div class="divider"><span>or</span></div>
+
+        <p class="switch-text">Don't have an account? <a href="register.html" class="switch-link">Create one →</a></p>
+
+      </div>
+    </main>
+
+  </div>
+
+  
+  <div class="toast" id="toast">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+    <span id="toastMsg">Login Successful!</span>
+  </div>
+
+  <script src="js/auth.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/login.js"></script>
+</body>
+</html>

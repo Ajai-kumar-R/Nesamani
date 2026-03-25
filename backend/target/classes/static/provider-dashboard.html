@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Dashboard — Nesamani (Provider)</title>
+  <link rel="stylesheet" href="css/dashboard.css">
+  <style>
+    /* Provider accent — sage green */
+    :root { --dash-accent:#2e6b4f; --gold-lt:#4a9e72; }
+    .profile-banner { background:var(--bark); background-image:radial-gradient(ellipse at 20% 50%,rgba(46,107,79,.22)0%,transparent 55%); }
+    .p-role-badge { background:rgba(46,107,79,.2); border:1px solid rgba(46,107,79,.3); color:#4a9e72; }
+    .p-meta-item { color:rgba(212,169,106,.7); }
+    .sidebar { background-image:radial-gradient(ellipse at 15% 15%,rgba(46,107,79,.2)0%,transparent 50%),radial-gradient(ellipse at 85% 85%,rgba(26,18,8,.5)0%,transparent 60%); }
+  </style>
+</head>
+<body>
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+    <a href="index.html" class="s-logo">
+      <div class="s-logo-mark"><span>N</span></div>
+      <span class="s-logo-text">Nesamani</span>
+    </a>
+    <div class="s-user" onclick="navigate('profile')">
+      <div class="s-avatar" id="sidebarAvatar">P</div>
+      <div class="s-user-info">
+        <div class="s-user-name" id="sidebarName">Loading…</div>
+        <div class="s-user-tag">Work Provider</div>
+      </div>
+    </div>
+    <nav class="s-nav">
+      <div class="s-section">Main</div>
+      <button class="nav-item active" id="nav-overview"      onclick="navigate('overview')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>Overview
+      </button>
+      <button class="nav-item" id="nav-services"             onclick="navigate('services')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>My Services
+      </button>
+      <button class="nav-item" id="nav-browse-jobs"          onclick="navigate('browse-jobs')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>Browse Jobs
+      </button>
+      <button class="nav-item" id="nav-responses"            onclick="navigate('responses')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>My Responses
+        <span class="s-badge" id="respBadge"></span>
+      </button>
+      <button class="nav-item" id="nav-bookings"             onclick="navigate('bookings')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>My Bookings
+        <span class="s-badge" id="bookingBadge"></span>
+      </button>
+      <div class="s-section">Account</div>
+      <button class="nav-item" id="nav-earnings"             onclick="navigate('earnings')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>Earnings
+      </button>
+      <button class="nav-item" id="nav-messages"             onclick="navigate('messages')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Messages
+        <span class="s-badge" id="msgBadge"></span>
+      </button>
+      <button class="nav-item" id="nav-notifications"        onclick="navigate('notifications')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>Notifications
+        <span class="s-badge" id="notifBadge"></span>
+      </button>
+      <button class="nav-item" id="nav-profile"              onclick="navigate('profile')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>Profile
+      </button>
+    </nav>
+    <div class="s-footer">
+      <button class="s-logout" onclick="doLogout()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>Log Out
+      </button>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <div class="main">
+    <div class="topbar">
+      <div class="topbar-left">
+        <button class="t-hamburger" onclick="toggleSidebar()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
+        <span class="page-title" id="pageTitle">Overview</span>
+      </div>
+      <div class="topbar-right">
+        <span class="role-pill">Work Provider</span>
+        <button class="t-btn" onclick="navigate('notifications')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+          <div class="t-notif-dot"></div>
+        </button>
+      </div>
+    </div>
+
+    <!-- OVERVIEW -->
+    <section class="page-section active" id="sec-overview">
+      <div class="sec-header"><div class="sec-title" id="greetText">Good morning 👋</div><div class="sec-sub">Your work activity at a glance.</div></div>
+      <div class="stats-grid" id="overviewStats"></div>
+      <div class="two-col">
+        <div class="panel">
+          <div class="panel-head"><span class="panel-title">Active Bookings</span><button class="panel-link" onclick="navigate('bookings')">View all →</button></div>
+          <div id="overviewBookings"></div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:14px">
+          <div class="panel"><div class="panel-head"><span class="panel-title">Quick Actions</span></div><div class="qa-grid" id="quickActions"></div></div>
+          <div class="panel"><div class="panel-head"><span class="panel-title">Notifications</span><button class="panel-link" onclick="navigate('notifications')">All →</button></div><div id="miniNotifs"></div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- MY SERVICES -->
+    <section class="page-section" id="sec-services">
+      <div class="sec-header"><div class="sec-title">My Services</div><div class="sec-sub">Services you offer — needers can browse and book these directly.</div></div>
+      <!-- Add service form -->
+      <div class="panel" style="padding:22px;margin-bottom:18px">
+        <div style="font-family:'Cormorant Garamond',serif;font-size:17px;font-weight:600;color:var(--soil);margin-bottom:14px">Add New Service</div>
+        <div class="form-grid">
+          <div class="form-group full"><label class="form-label">Service Title *</label><input class="form-input" id="svcTitle" placeholder="e.g. Pipe Fitting & Leak Repair"></div>
+          <div class="form-group"><label class="form-label">Category *</label>
+            <select class="form-select" id="svcCategory">
+              <option value="">Select category</option>
+              <option>Plumbing</option><option>Electrical</option><option>Painting</option>
+              <option>Driving</option><option>Cleaning</option><option>Carpentry</option>
+              <option>Gardening</option><option>Cooking</option><option>Other</option>
+            </select>
+          </div>
+          <div class="form-group"><label class="form-label">Location</label><input class="form-input" id="svcLocation" placeholder="City or area"></div>
+          <div class="form-group"><label class="form-label">Price</label><input class="form-input" id="svcPrice" placeholder="e.g. ₹500"></div>
+          <div class="form-group"><label class="form-label">Price Type</label>
+            <select class="form-select" id="svcPriceType">
+              <option value="NEGOTIABLE">Negotiable</option>
+              <option value="FIXED">Fixed</option>
+              <option value="PER_HOUR">Per Hour</option>
+              <option value="PER_DAY">Per Day</option>
+              <option value="PER_MONTH">Per Month</option>
+            </select>
+          </div>
+          <div class="form-group full"><label class="form-label">Description</label><textarea class="form-textarea" id="svcDesc" placeholder="Describe what you offer in detail…"></textarea></div>
+        </div>
+        <div style="margin-top:16px"><button class="btn-accent" id="addServiceBtn" onclick="addService()">Add Service →</button></div>
+      </div>
+      <!-- My services list -->
+      <div class="panel"><div id="myServicesList"></div></div>
+    </section>
+
+    <!-- BROWSE JOBS -->
+    <section class="page-section" id="sec-browse-jobs">
+      <div class="sec-header"><div class="sec-title">Browse Jobs</div><div class="sec-sub">Jobs posted by needers — respond to win the work.</div></div>
+      <div class="search-bar">
+        <div class="search-field">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+          <input id="jobSearch" type="text" placeholder="Search by title, category or location…" oninput="filterOpenJobs()">
+        </div>
+      </div>
+      <div class="panel"><div id="openJobsList"></div></div>
+    </section>
+
+    <!-- MY RESPONSES -->
+    <section class="page-section" id="sec-responses">
+      <div class="sec-header"><div class="sec-title">My Responses</div><div class="sec-sub">Jobs you've responded to.</div></div>
+      <div class="filter-tabs" id="respFilterTabs">
+        <button class="tab-btn active" data-f="all"       onclick="filterResponses(this)">All</button>
+        <button class="tab-btn"        data-f="pending"   onclick="filterResponses(this)">Pending</button>
+        <button class="tab-btn"        data-f="accepted"  onclick="filterResponses(this)">Accepted</button>
+        <button class="tab-btn"        data-f="rejected"  onclick="filterResponses(this)">Rejected</button>
+        <button class="tab-btn"        data-f="withdrawn" onclick="filterResponses(this)">Withdrawn</button>
+      </div>
+      <div class="panel"><div id="myResponsesList"></div></div>
+    </section>
+
+    <!-- MY BOOKINGS -->
+    <section class="page-section" id="sec-bookings">
+      <div class="sec-header"><div class="sec-title">My Bookings</div><div class="sec-sub">Bookings you've received from needers.</div></div>
+      <div class="filter-tabs" id="bookFilterTabs">
+        <button class="tab-btn active" data-f="all"         onclick="filterBookings(this)">All</button>
+        <button class="tab-btn"        data-f="pending"     onclick="filterBookings(this)">Pending</button>
+        <button class="tab-btn"        data-f="accepted"    onclick="filterBookings(this)">Accepted</button>
+        <button class="tab-btn"        data-f="in_progress" onclick="filterBookings(this)">In Progress</button>
+        <button class="tab-btn"        data-f="completed"   onclick="filterBookings(this)">Completed</button>
+      </div>
+      <div class="panel"><div id="myBookingsList"></div></div>
+    </section>
+
+    <!-- EARNINGS -->
+    <section class="page-section" id="sec-earnings">
+      <div class="sec-header"><div class="sec-title">Earnings</div><div class="sec-sub">Track your income.</div></div>
+      <div class="stats-grid" style="grid-template-columns:repeat(3,1fr);margin-bottom:20px">
+        <div class="stat-card"><div class="stat-icon si-gold">💰</div><div class="stat-val">₹18,400</div><div class="stat-key">Total Earned</div><div class="stat-delta delta-up"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="18 15 12 9 6 15"/></svg>+12% this month</div></div>
+        <div class="stat-card"><div class="stat-icon si-sage">📅</div><div class="stat-val">₹3,200</div><div class="stat-key">This Month</div><div class="stat-delta delta-up"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="18 15 12 9 6 15"/></svg>+₹400 vs last</div></div>
+        <div class="stat-card"><div class="stat-icon si-accent">⏳</div><div class="stat-val">₹1,800</div><div class="stat-key">Pending</div><div class="stat-delta delta-warn">2 payments pending</div></div>
+      </div>
+      <div class="panel" style="padding:20px">
+        <div class="panel-title" style="margin-bottom:14px">Monthly Earnings</div>
+        <div class="bar-chart" id="earningsChart"></div>
+      </div>
+    </section>
+
+    <!-- MESSAGES -->
+    <section class="page-section" id="sec-messages">
+      <div class="sec-header" style="margin-bottom:14px"><div class="sec-title">Messages</div><div class="sec-sub">Direct chat with needers.</div></div>
+      <div class="msg-layout">
+        <div class="msg-list"><div class="msg-list-head">Chats</div><div id="msgThreadList"></div></div>
+        <div class="msg-chat">
+          <div class="msg-chat-head">
+            <div class="msg-avatar" id="chatAvatar">👤</div>
+            <div><div class="msg-chat-name" id="chatName">—</div><div class="msg-chat-role" id="chatRole">—</div></div>
+            <div class="msg-chat-online">Online</div>
+          </div>
+          <div class="msg-bubbles" id="chatBubbles"></div>
+          <div class="msg-input-row">
+            <input class="msg-input" id="msgInput" placeholder="Type a message…" onkeydown="if(event.key==='Enter')sendMsg()">
+            <button class="msg-send" onclick="sendMsg()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg></button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- NOTIFICATIONS -->
+    <section class="page-section" id="sec-notifications">
+      <div class="sec-header" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px">
+        <div><div class="sec-title">Notifications</div><div class="sec-sub">Stay updated on job activity.</div></div>
+        <button class="btn-outline" onclick="markAllRead()">Mark all read</button>
+      </div>
+      <div class="panel"><div id="allNotifsList"></div></div>
+    </section>
+
+    <!-- PROFILE -->
+    <section class="page-section" id="sec-profile">
+      <div class="profile-banner">
+        <div class="p-big-avatar" id="profileAvatar">P</div>
+        <div class="p-intro">
+          <div class="p-name" id="profileName">—</div>
+          <div class="p-role-badge">Work Provider Account</div>
+          <div class="p-meta">
+            <span class="p-meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>Member since 2025</span>
+            <span class="p-meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>4.9 Rating</span>
+          </div>
+        </div>
+        <button class="btn-save" onclick="saveProfile()">Save Changes</button>
+      </div>
+      <div class="p-grid">
+        <div class="panel" style="padding:22px">
+          <div style="font-family:'Cormorant Garamond',serif;font-size:17px;font-weight:600;color:var(--soil);margin-bottom:16px">Personal Info</div>
+          <div class="form-group" style="margin-bottom:12px"><label class="form-label">Full Name</label><input class="form-input" id="pName" placeholder="Your name"></div>
+          <div class="form-group" style="margin-bottom:12px"><label class="form-label">Email</label><input class="form-input" id="pEmail" type="email"></div>
+          <div class="form-group" style="margin-bottom:12px"><label class="form-label">Phone</label><input class="form-input" id="pPhone" type="tel"></div>
+          <div class="form-group" style="margin-bottom:12px"><label class="form-label">Location</label><input class="form-input" id="pLocation" placeholder="City, District"></div>
+          <div class="form-group" style="margin-bottom:16px"><label class="form-label">Bio</label><textarea class="form-textarea" id="pBio" placeholder="Tell needers about your experience…"></textarea></div>
+          <button class="btn-save" onclick="saveProfile()">Save Changes</button>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:16px">
+          <div class="panel" style="padding:22px">
+            <div style="font-family:'Cormorant Garamond',serif;font-size:17px;font-weight:600;color:var(--soil);margin-bottom:12px">Skills</div>
+            <div class="skills-box" id="skillsBox"></div>
+            <div style="display:flex;gap:8px;margin-top:10px">
+              <input class="form-input" id="skillInput" placeholder="Add a skill…" style="flex:1" onkeydown="if(event.key==='Enter')addSkill()">
+              <button class="btn-outline" onclick="addSkill()">Add</button>
+            </div>
+          </div>
+          <div class="panel" style="padding:22px">
+            <div style="font-family:'Cormorant Garamond',serif;font-size:17px;font-weight:600;color:var(--soil);margin-bottom:12px">Account Stats</div>
+            <div style="display:flex;flex-direction:column;gap:9px" id="profileStats"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <div class="toast" id="toast">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+    <span id="toastMsg"></span>
+  </div>
+
+  <script src="js/auth.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/provider-dashboard.js"></script>
+</body>
+</html>
